@@ -1,0 +1,10 @@
+topic = "YOUR TOPIC" #topic name
+broker = "test.mosquitto.org" #broker name or broker IP
+load1 = "YOUR LOAD 1"  #load connected to 0x40 terminals
+load2 = "YOUR LOAD 2"		#load connected to the 0x41 terminals
+load3 = "YOUR LOAD 3"		#load connected to the 0x42 terminals
+cacert = "/SOME/PATH/TO/ca.crt" #path to cafile
+certfile = "/SOME/PATH/TO/server.crt" #path to certfile
+keyfile = "/SOME/PATH/TO/server.key" #path to keyfile
+timezone = 'US/Arizona' #timezone for timestamps, consult pytz list of timezones for acceptable timezones at https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+sleeptime = 10 #wait 10 seconds between publishing data
