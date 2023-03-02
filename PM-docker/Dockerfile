@@ -15,6 +15,8 @@ RUN apt-get install -y python3 python3-pip
 
 RUN pip3 install adafruit-circuitpython-ina219
 
+RUN apt-get install -y python3-smbus python3-dev i2c-tools
+
 RUN apt-get install -y python3-lgpio
 
 RUN pip install rpi.gpio
@@ -43,9 +45,7 @@ ADD PowerMonitor.py /PowerMonitor.py
 
 RUN chmod +x /PowerMonitor.py 
 
-RUN apt-get install -y python3-smbus python3-dev i2c-tools
-
-CMD modprobe i2c-dev && python PowerMonitor.py  && bash
+CMD bash
 
 #RUN python3 PowerMonitor.py
 
