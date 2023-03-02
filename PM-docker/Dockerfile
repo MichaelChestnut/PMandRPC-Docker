@@ -43,6 +43,8 @@ ADD PowerMonitor.py /PowerMonitor.py
 
 RUN chmod +x /PowerMonitor.py 
 
+RUN apt-get install -y python3-smbus python3-dev i2c-tools
+
 CMD modprobe i2c-dev && python PowerMonitor.py  && bash
 
 #RUN python3 PowerMonitor.py
