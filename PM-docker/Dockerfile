@@ -2,7 +2,7 @@
 
 FROM ubuntu:22.04
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+#CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
 
 RUN apt-get update
 
@@ -43,6 +43,8 @@ ADD PowerMonitor.py /PowerMonitor.py
 
 RUN chmod +x /PowerMonitor.py 
 
-RUN python3 PowerMonitor.py
+CMD modprobe i2c-dev && python PowerMonitor.py  && bash
+
+#RUN python3 PowerMonitor.py
 
 #done
