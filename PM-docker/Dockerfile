@@ -36,4 +36,7 @@ ADD Data /Data
 
 RUN chmod +x /PowerMonitor.py
 
-CMD bash && service mosquitto start && python3 PowerMonitor.py
+CMD service mosquitto start \
+    && python3 PowerMonitor.py \
+    && bash
+
