@@ -2,20 +2,13 @@
 
 FROM ubuntu:22.04
 
-#CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
-
 RUN apt-get update
 
 RUN apt-get install -y python3 python3-pip
 
-#RUN apt-get update && \
-#      apt-get -y install sudo
-
-#RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+RUN apt-get install -y python3-smbus python3-dev i2c-tools
 
 RUN pip3 install adafruit-circuitpython-ina219
-
-RUN apt-get install -y python3-smbus python3-dev i2c-tools
 
 RUN apt-get install -y python3-lgpio
 
@@ -29,11 +22,7 @@ RUN apt-get update
 
 RUN apt-get install -y mosquitto mosquitto-clients
 
-RUN service mosquitto start
-
-COPY NewMosquitto.conf /etc/mosquitto/conf.d
-
-RUN service mosquitto restart
+COPY mosquitto.conf /etc/mosquitto/
 
 RUN pip3 install paho-mqtt
 
@@ -43,10 +32,8 @@ ADD PMConfiguration.py /PMConfiguration.py
 
 ADD PowerMonitor.py /PowerMonitor.py
 
-RUN chmod +x /PowerMonitor.py 
+ADD Data /Data
 
-CMD bash
+RUN chmod +x /PowerMonitor.py
 
-#RUN python3 PowerMonitor.py
-
-#done
+CMD bash && service mosquitto start && python3 PowerMonitor.py
