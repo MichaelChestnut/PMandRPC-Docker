@@ -2,16 +2,11 @@
 
 FROM ubuntu:22.04
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
-
 RUN apt-get update
 
 RUN apt-get install -y python3 python3-pip
 
-RUN apt-get update && \
-      apt-get -y install sudo
-
-RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+RUN apt-get install -y python3-smbus python3-dev i2c-tools
 
 RUN apt install -y software-properties-common
 
@@ -21,13 +16,7 @@ RUN apt-get update
 
 RUN apt-get install -y mosquitto mosquitto-clients
 
-RUN service mosquitto start
-
-ADD NewMosquitto.conf /NewMosquitto.conf
-
-RUN cp NewMosquitto.conf /etc/mosquitto/conf.d
-
-RUN service mosquitto restart
+COPY mosquitto.conf /etc/mosquitto/
 
 RUN pip3 install paho-mqtt
 
@@ -39,17 +28,13 @@ RUN pip install pytz
 
 RUN pip install pythonping
 
-#RUN git clone https://github.com/NAU-IoT/RemotePiReset.git
+ADD RPCConfiguration.py /RPCConfiguration.py
 
-#RUN cd RemotePiReset
-
-ADD RPRConfiguration.py /RPRConfiguration.py
-
-ADD RemotePiReset.py /RemotePiReset.py
+ADD RemotePiControl.py /RemotePiControl.py
  
-RUN chmod +x /RemotePiReset.py
+RUN chmod +x /RemotePiControl.py
 
-#RUN python3 RemotePiReset.py
-
-#done
+CMD service mosquitto start \
+    && python3 RemotePiControl.py \
+    && bash
 
